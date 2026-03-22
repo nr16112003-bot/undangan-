@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Wedding of Nadia & Alfin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Libre+Baskerville:wght@400&family=Great+Vibes&family=Inter:wght@300&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  color:#4a3f35;
+  scroll-snap-type:y mandatory;
+  overflow-y:scroll;
+
+  /* aesthetic soft background */
+  background: linear-gradient(180deg, #f6f1e9 0%, #efe6da 50%, #f6f1e9 100%);
+}
+
+h1,h2{
+  font-family:'Playfair Display',serif;
+  font-weight:500;
+}
+
+.script{
+  font-family:'Great Vibes',cursive;
+  font-size:30px;
+}
+
+p{
+  font-family:'Libre Baskerville',serif;
+  font-size:13px;
+  line-height:1.9;
+}
+
+/* subtle texture overlay */
+body::after{
+  content:"";
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(0,0,0,0.04), transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(0,0,0,0.04), transparent 45%),
+    repeating-linear-gradient(45deg, rgba(0,0,0,0.015) 0px, rgba(0,0,0,0.015) 1px, transparent 1px, transparent 6px);
+  pointer-events:none;
+}
+
+/* frame */
+body::before{
+  content:"";
+  position:fixed;
+  top:18px;
+  left:18px;
+  right:18px;
+  bottom:18px;
+  border:1px solid rgba(0,0,0,0.06);
+  pointer-events:none;
+}
+
+.section{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:40px;
+  text-align:center;
+  max-width:600px;
+  margin:auto;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1.2s ease;
+  scroll-snap-align:start;
+}
+
+.section.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.cover{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+.cover h2{
+  font-size:12px;
+  letter-spacing:3px;
+}
+
+button{
+  padding:8px 24px;
+  border:1px solid #4a3f35;
+  background:transparent;
+  color:#4a3f35;
+  font-size:12px;
+  margin-top:20px;
+  cursor:pointer;
+}
+
+.gift-box{
+  border:1px solid rgba(0,0,0,0.08);
+  padding:12px;
+  margin:8px;
+  border-radius:6px;
+  background:rgba(255,255,255,0.3);
+}
+
+.copy-btn{
+  font-size:11px;
+  opacity:0.6;
+  cursor:pointer;
+}
+
+input,textarea{
+  width:100%;
+  padding:8px;
+  border:1px solid rgba(0,0,0,0.1);
+  background:transparent;
+  font-size:12px;
+}
+
+.wish-item{
+  border-bottom:1px solid rgba(0,0,0,0.08);
+  padding:8px;
+  font-size:12px;
+  text-align:left;
+}
+
+.music-btn{
+  position:fixed;
+  bottom:18px;
+  right:18px;
+  border:1px solid rgba(0,0,0,0.2);
+  padding:6px 10px;
+  font-size:11px;
+  background:rgba(255,255,255,0.6);
+  cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="cover" id="cover">
+  <h2>THE WEDDING OF</h2>
+  <div class="script">Nadia & Alfin</div>
+  <p>Kepada Yth Bapak/Ibu/Saudara/i</p>
+  <button onclick="openInvite()">Buka Undangan</button>
+</div>
+
+<div id="content" style="display:none">
+
+<section class="section">
+  <p>"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup..."</p>
+  <p><i>(QS. Ar-Rum:21)</i></p>
+</section>
+
+<section class="section">
+  <h2>Bride & Groom</h2>
+  <div class="script">Nadia & Alfin</div>
+  <p><b>NADIA RAHMA SALSABILA YASMIN</b><br>
+  Putri dari Bapak Abdullah Mahfud (Alm) & Ibu Istiqomah</p>
+
+  <p style="margin:25px 0">&</p>
+
+  <p><b>ALFIN SYIFANA PUTRA</b><br>
+  Putra dari Bapak Andri Sarwono & Ibu Prihatiwi</p>
+</section>
+
+<section class="section">
+  <h2>Save The Date</h2>
+  <p>19 April 2026 • 09.00 WIB</p>
+  <div id="countdown"></div>
+</section>
+
+<section class="section">
+  <h2>Detail Acara</h2>
+  <p><b>Akad Nikah & Resepsi</b></p>
+  <p>Minggu, 19 April 2026</p>
+  <p>Pukul 09.00 WIB</p>
+  <p>Beji Parakan RT 01/10, Ungaran Timur, Semarang</p>
+</section>
+
+<section class="section">
+  <h2>Wedding Gift</h2>
+  <p style="margin-bottom:20px">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Jika memberi adalah ungkapan kasih, dapat melalui:</p>
+
+  <div class="gift-box" style="padding:20px">
+    <img src="qr.png" style="width:220px; background:white; padding:12px; border-radius:10px; box-shadow:0 10px 25px rgba(0,0,0,0.1); object-fit:contain;">
+    <div style="margin-top:10px; font-size:13px">QRIS a.n <b>Alfin Syifana Putra</b></div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Ucapan & Doa</h2>
+  <input type="text" id="name" placeholder="Nama Anda">
+  <textarea id="message" placeholder="Tulis ucapan..."></textarea>
+  <button onclick="addWish()">Kirim</button>
+  <div id="wishList"></div>
+</section>
+
+</div>
+
+<div class="music-btn" onclick="toggleMusic()">musik</div>
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2023/04/17/audio_2b2e3d5f1a.mp3?filename=soft-piano-golden-hour-143686.mp3" type="audio/mp3">
+</audio>
+
+<script>
+let playing = false;
+function openInvite(){
+  document.getElementById('cover').style.display='none';
+  document.getElementById('content').style.display='block';
+  document.getElementById('music').play().catch(()=>{});
+  playing = true;
+}
+
+function toggleMusic(){
+  const music = document.getElementById('music');
+  if(playing){ music.pause(); } else { music.play(); }
+  playing = !playing;
+}
+
+function copyText(text){ navigator.clipboard.writeText(text); }
+
+const sections = document.querySelectorAll('.section');
+window.addEventListener('scroll', () => {
+  sections.forEach(sec => {
+    if(sec.getBoundingClientRect().top < window.innerHeight - 100){
+      sec.classList.add('show');
+    }
+  });
+});
+
+const targetDate = new Date("2026-04-19 09:00:00").getTime();
+setInterval(()=>{
+  const now = new Date().getTime();
+  const d = targetDate - now;
+  const days = Math.floor(d/(1000*60*60*24));
+  const hours = Math.floor((d%(1000*60*60*24))/(1000*60*60));
+  const minutes = Math.floor((d%(1000*60*60))/(1000*60));
+  document.getElementById('countdown').innerHTML = `${days} hari ${hours} jam ${minutes} menit`;
+},1000);
+
+function addWish(){
+  const name = document.getElementById('name').value;
+  const msg = document.getElementById('message').value;
+  if(!name || !msg) return;
+
+  const data = JSON.parse(localStorage.getItem('wishes')||'[]');
+  data.push({name, msg});
+  localStorage.setItem('wishes', JSON.stringify(data));
+  renderWish();
+}
+
+function renderWish(){
+  const list = document.getElementById('wishList');
+  const data = JSON.parse(localStorage.getItem('wishes')||'[]');
+  list.innerHTML = data.map(w => `<div class='wish-item'><b>${w.name}</b><br>${w.msg}</div>`).join('');
+}
+
+renderWish();
+</script>
+
+</body>
+</html>
